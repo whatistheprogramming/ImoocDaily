@@ -1,10 +1,12 @@
 package com.example.yuan.imoocdaily;
 
+import java.io.Serializable;
+
 /**
  * Created by yuan on 2017/11/5.
  */
 
-public class CostBean
+public class CostBean implements Serializable //要通过Intent传递，就要实现序列化
 {
     private String costTitle;
     private String costDate;

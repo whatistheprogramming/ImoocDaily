@@ -12,6 +12,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
+
+    public static final String COST_MONEY = "cost_money";
+    public static final String COST_TITLE = "cost_title";
+    public static final String COST_DATE = "cost_date";
+    public static final String IMOOC_COST = "imooc_cost";
+
     public DatabaseHelper(Context context)
     {
         //第2个参数是数据库名，第3个是工厂模式，第4个是版本
@@ -38,12 +44,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
         SQLiteDatabase database = getWritableDatabase();
         //用ContentValues存储数据
         ContentValues values = new ContentValues();
-        values.put("cost_title", costBean.getCostTitle());
-        values.put("cost_date", costBean.getCostDate());
-        values.put("cost_money", costBean.getCostMoney());
+        values.put(COST_TITLE, costBean.getCostTitle());
+        values.put(COST_DATE, costBean.getCostDate());
+        values.put(COST_MONEY, costBean.getCostMoney());
         //插入到数据库中
         //第一个参数是数据库名，第二个是填null，第三个是ContentValues
-        database.insert("imooc_cost", null, values);
+        database.insert(IMOOC_COST, null, values);
     }
 
     /**
@@ -52,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public Cursor getAllCostData()
     {
         SQLiteDatabase database = getWritableDatabase();
-        return database.query("imooc_cost", null, null, null, null, null, "cost_date " + "ASC"); //按照时间排序
+        return database.query(IMOOC_COST, null, null, null, null, null, COST_DATE + " ASC"); //按照时间排序
 
     }
 
@@ -62,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public void deleteAllData()
     {
         SQLiteDatabase database = getWritableDatabase();
-        database.delete("imooc_cost", null, null);
+        database.delete(IMOOC_COST, null, null);
     }
 
     @Override
