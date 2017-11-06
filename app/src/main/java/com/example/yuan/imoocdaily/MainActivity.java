@@ -1,5 +1,6 @@
 package com.example.yuan.imoocdaily;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity
 
     private List<CostBean> mCostBeanList = new ArrayList<>();
 
+    private DatabaseHelper mDatabaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -30,11 +33,18 @@ public class MainActivity extends AppCompatActivity
 
         //获取ListView实例
         costList = (ListView) findViewById(R.id.list_view);
+
+        mDatabaseHelper = new DatabaseHelper(this);
+
+
         //提供数据
         initCostData();
         //ListView设置适配器
         costList.setAdapter(new CostListAdapter(this, mCostBeanList));
-        
+
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
@@ -49,13 +59,32 @@ public class MainActivity extends AppCompatActivity
 
     private void initCostData()
     {
+        //清空数据
+        mDatabaseHelper.deleteAllData();
         for (int i = 0; i < 20; i++)
         {
             CostBean costBean = new CostBean();
             costBean.setCostDate(i * 39 + "");
             costBean.setCostMoney(i * 234 + "");
             costBean.setCostTitle("item" + i);
-            mCostBeanList.add(costBean);
+            //插入到数据库中
+            mDatabaseHelper.insertCost(costBean);
+        }
+        Cursor cursor = mDatabaseHelper.getAllCostData();
+        if (cursor != null)
+        {
+            while (cursor.moveToNext())
+            {
+                CostBean costBean = new CostBean();
+                costBean.setCostTitle(cursor.getString(cursor.getColumnIndex("cost_title")));
+                costBean.setCostDate(cursor.getString(cursor.getColumnIndex("cost_date")));
+                costBean.setCostMoney(cursor.getString(cursor.getColumnIndex("cost_money")));
+                //把从数据库查出来的数据添加到dataList中去
+                mCostBeanList.add(costBean);
+
+            }
+            //不要忘记close
+            cursor.close();
         }
     }
 
