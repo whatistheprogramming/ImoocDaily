@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="80dp">
+
+    <!--显示花费的内容标题-->
+    <TextView
+        android:id="@+id/text_view_title"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:text="coseTitle"
+        android:textSize="35sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        />
+    <!--
+    android:layout_alignParentLeft="true"
+    align为对齐方式; parent为父控件 left为左;
+    所以该行代码的总体含义为:某控件里有该代码.某空间相对于父控件左对齐;
+
+    android:ellipsize="marquee"设置跑马灯效果
+
+    -->
+
+    <!--花费的时间-->
+    <TextView
+        android:id="@+id/text_view_date"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/text_view_title"
+        android:text="costDate"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <!--花费的金额-->
+    <TextView
+        android:id="@+id/text_view_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:text="30"
+        android:layout_alignParentRight="true"
+        android:textSize="30sp"
+        android:layout_marginRight="20dp"
+        />
+
+    <!--
+    android:layout_alignParentRight="true" 显示在item的最右边，即右对齐
+
+    -->
+
+
+</RelativeLayout>
